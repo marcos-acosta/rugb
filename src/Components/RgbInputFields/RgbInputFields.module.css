@@ -16,7 +16,7 @@
   opacity: 0.5;
 }
 
-.darkFont {
+/* .darkFont {
   color: black;
 }
 
@@ -29,14 +29,19 @@
 }
 
 .fainterLightFont {
-  color: rgb(235, 235, 235);
-}
+  color: rgb(242, 242, 242);
+} */
 
 .rgbInputContainer {
   font-size: 80px;
   text-align: center;
+  background-color: white;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 10px 0px rgba(0, 0, 0, 0.101);
 }
 
 .slightShadow {
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.304);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.106);
 }

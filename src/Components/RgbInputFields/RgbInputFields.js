@@ -1,17 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  combineClassNames,
-  gameModes,
-  inputValueIsValid,
-  shouldUseDarkFont,
-} from "../../util";
+import { combineClassNames, gameModes, inputValueIsValid } from "../../util";
 import styles from "./RgbInputFields.module.css";
 
 export default function RgbInputFields(props) {
   const [inputRgbValues, setInputRgbValues] = useState(["", "", ""]);
   const inputRefs = [useRef(), useRef(), useRef()];
   const firstRefCurrent = inputRefs[0] && inputRefs[0].current;
-  const darkFont = shouldUseDarkFont(...props.actualColor);
 
   function submitAnswer() {
     for (let i = 0; i < 3; i++) {
@@ -56,7 +50,6 @@ export default function RgbInputFields(props) {
     <div
       className={combineClassNames(
         styles.rgbInputContainer,
-        darkFont ? styles.fainterDarkFont : styles.fainterLightFont,
         styles.slightShadow
       )}
     >
@@ -65,10 +58,7 @@ export default function RgbInputFields(props) {
         return (
           <span key={index}>
             <input
-              className={combineClassNames(
-                styles.rgbInputField,
-                darkFont ? styles.darkFont : styles.lightFont
-              )}
+              className={combineClassNames(styles.rgbInputField)}
               type="text"
               name={`rgb-${index}`}
               maxLength="3"

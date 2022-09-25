@@ -44,6 +44,13 @@ export default function Trainer() {
     >
       <div
         className={combineClassNames(
+          styles.predictedColorScreen,
+          gameMode === gameModes.JUDGED && styles.predictedColorScreenDown
+        )}
+        style={{ backgroundColor: formatRgbValues(...predictedColor) }}
+      />
+      <div
+        className={combineClassNames(
           styles.centerFloaterContainer,
           gameMode === gameModes.JUDGED && styles.centerFloaterContainerUp
         )}

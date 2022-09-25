@@ -1,10 +1,11 @@
 body {
   margin: 0;
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'Roboto Slab', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 html, body, #root {
   height: 100%;
+  color: rgb(30, 30, 30);
 }
