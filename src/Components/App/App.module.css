@@ -1,0 +1,6 @@
+.highLevelLayout {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-rows: 70px 1fr;
+}

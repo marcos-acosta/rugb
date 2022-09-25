@@ -1,0 +1,41 @@
+.rgbInputField {
+  border: none;
+  background-color: transparent;
+  display: inline-block;
+  font-size: 80px;
+  font-family: inherit;
+  width: 160px;
+  text-align: center;
+  font-weight: 500;
+  text-shadow: inherit;
+  outline: none;
+}
+
+.rgbInputField::placeholder {
+  color: inherit;
+  opacity: 0.5;
+}
+
+.darkFont {
+  color: black;
+}
+
+.fainterDarkFont {
+  color: rgb(42, 42, 42);
+}
+
+.lightFont {
+  color: white;
+}
+
+.fainterLightFont {
+  color: rgb(235, 235, 235);
+}
+
+.rgbInputContainer {
+  font-size: 80px;
+}
+
+.slightShadow {
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.304);
+}
