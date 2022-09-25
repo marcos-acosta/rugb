@@ -1,15 +1,53 @@
-import React, { useState } from "react";
-import { combineClassNames, shouldUseDarkFont } from "../../util";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  combineClassNames,
+  gameModes,
+  inputValueIsValid,
+  shouldUseDarkFont,
+} from "../../util";
 import styles from "./RgbInputFields.module.css";
 
 export default function RgbInputFields(props) {
   const [inputRgbValues, setInputRgbValues] = useState(["", "", ""]);
+  const inputRefs = [useRef(), useRef(), useRef()];
+  const firstRefCurrent = inputRefs[0] && inputRefs[0].current;
   const darkFont = shouldUseDarkFont(...props.actualColor);
+
+  function submitAnswer() {
+    for (let i = 0; i < 3; i++) {
+      if (!inputValueIsValid(inputRgbValues[i])) {
+        inputRefs[i].current.focus();
+        inputRefs[i].current.select();
+        return;
+      }
+    }
+    props.sendAnswer(inputRgbValues.map((val) => parseInt(val)));
+  }
+
+  function onKeyDown({ key }) {
+    if (key === "Enter" && props.gameMode === gameModes.WAITING_FOR_GUESS) {
+      submitAnswer();
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  });
+
+  useEffect(() => {
+    if (props.gameMode === gameModes.WAITING_FOR_GUESS) {
+      setInputRgbValues(["", "", ""]);
+      if (firstRefCurrent) {
+        firstRefCurrent.focus();
+      }
+    }
+  }, [props.gameMode, firstRefCurrent]);
 
   function updateRgbValue(position, newValue) {
     setInputRgbValues(
       inputRgbValues.map((value, index) =>
-        index === position - 1 ? newValue : value
+        index === position ? newValue : value
       )
     );
   }
@@ -23,11 +61,10 @@ export default function RgbInputFields(props) {
       )}
     >
       {"rgb("}
-      {[1, 2, 3].map((index) => {
+      {[0, 1, 2].map((index) => {
         return (
           <span key={index}>
             <input
-              key={index}
               className={combineClassNames(
                 styles.rgbInputField,
                 darkFont ? styles.darkFont : styles.lightFont
@@ -38,12 +75,14 @@ export default function RgbInputFields(props) {
               onChange={(e) => {
                 updateRgbValue(index, e.target.value);
               }}
-              value={inputRgbValues[index - 1]}
-              placeholder={"RGB".charAt(index - 1)}
+              value={inputRgbValues[index]}
+              placeholder={"RGB".charAt(index)}
               autoComplete="off"
-              autoFocus={index === 1}
+              autoFocus={index === 0}
+              ref={inputRefs[index]}
+              readOnly={props.gameMode === gameModes.JUDGED}
             />
-            {index < 3 && ","}
+            {index < 2 && ","}
           </span>
         );
       })}
