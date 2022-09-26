@@ -1,3 +1,6 @@
+import DeltaE from "delta-e";
+import space from "color-space";
+
 function generateRandomEightBitInteger() {
   return Math.floor(Math.random() * 255);
 }
@@ -12,11 +15,6 @@ function generateRandomRgbValues() {
 
 function formatRgbValues(r, g, b) {
   return `rgb(${r},${g},${b})`;
-}
-
-function shouldUseDarkFont(r, g, b) {
-  // return r * 0.299 + g * 0.587 + b * 0.114 > 200;
-  return true;
 }
 
 function handleRgbFieldChange(e) {
@@ -42,15 +40,22 @@ function inputValueIsValid(value) {
   return !isNaN(value) && parseInt(value) >= 0 && parseInt(value) < 256;
 }
 
+function createDeltaEDict(l, a, b) {
+  return {
+    L: l,
+    A: a,
+    B: b,
+  };
+}
+
 function score(actualColor, predictedColor) {
-  return Math.max(
-    1 -
-      actualColor
-        .map((value, i) => Math.abs(value - predictedColor[i]))
-        .reduce((partialSum, a) => partialSum + a, 0) /
-        (128 * 3),
-    0
+  const actualColorLab = space.rgb.lab(actualColor);
+  const predictedColorLab = space.rgb.lab(predictedColor);
+  const distance = DeltaE.getDeltaE00(
+    createDeltaEDict(...actualColorLab),
+    createDeltaEDict(...predictedColorLab)
   );
+  return Math.round(Math.max(100 - Math.pow(distance / 3, 2), 0));
 }
 
 const gameModes = {
@@ -62,7 +67,6 @@ export {
   generateRandomRgbValues,
   formatRgbValues,
   handleRgbFieldChange,
-  shouldUseDarkFont,
   combineClassNames,
   inputValueIsValid,
   score,
