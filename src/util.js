@@ -55,7 +55,7 @@ function score(actualColor, predictedColor) {
     createDeltaEDict(...actualColorLab),
     createDeltaEDict(...predictedColorLab)
   );
-  return Math.round(Math.max(100 - Math.pow(distance / 3, 2), 0));
+  return Math.round(Math.max(100 - Math.pow(distance / 6, 2.6), 0));
 }
 
 const gameModes = {

@@ -1,0 +1,5 @@
+{
+  "include": [
+    "src", "type-declarations.d.ts"
+  ]
+}
