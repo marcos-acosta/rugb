@@ -16,6 +16,10 @@ export default function Score(props) {
         <CountUp start={start} end={end} delay={0} duration={0.75}>
           {({ countUpRef }) => (
             <div>
+              <span className={styles.roundTracker}>
+                {cumulativeScores.length}/10{" "}
+              </span>
+              <>&ensp;</>
               <span ref={countUpRef} />
               {props.gameMode === gameModes.JUDGED && (
                 <span className={styles.newPoints}> +{props.roundScore}</span>

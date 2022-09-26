@@ -16,6 +16,8 @@ export default function Trainer() {
   const [gameMode, setGameMode] = useState(gameModes.WAITING_FOR_GUESS);
   const [roundScores, setRoundScores] = useState([]);
   const [cumulativeScores, setCumulativeScores] = useState([]);
+  const [actualColorHistory, setActualColorHistory] = useState([]);
+  const [predictedColorHistory, setPredictedColorHistory] = useState([]);
 
   console.log(roundScores);
   console.log(cumulativeScores);
@@ -31,6 +33,8 @@ export default function Trainer() {
         ? roundScore
         : cumulativeScores.slice(-1)[0] + roundScore,
     ]);
+    setActualColorHistory([...actualColorHistory, actualColor]);
+    setPredictedColorHistory([...predictedColorHistory, predColor]);
   }
 
   function resetToNextColor() {
