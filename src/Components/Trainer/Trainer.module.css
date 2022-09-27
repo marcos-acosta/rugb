@@ -13,17 +13,15 @@
 }
 
 .centerFloaterContainerUp {
-  top: 250px;
+  top: 278px;
 }
 
 .predictedColorScreen {
   position: absolute;
   width: 100%;
   height: 0px;
-  transition-property: height;
-  transition-duration: 0.25s;
 }
 
 .predictedColorScreenDown {
-  height: 274px;
+  height: 360px;
 }

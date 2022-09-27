@@ -7,30 +7,18 @@
   width: 160px;
   text-align: center;
   font-weight: 500;
-  text-shadow: inherit;
   outline: none;
+}
+
+.inheritShadowAndColor {
+  color: inherit;
+  text-shadow: inherit;
 }
 
 .rgbInputField::placeholder {
   color: inherit;
   opacity: 0.5;
 }
-
-/* .darkFont {
-  color: black;
-}
-
-.fainterDarkFont {
-  color: rgb(42, 42, 42);
-}
-
-.lightFont {
-  color: white;
-}
-
-.fainterLightFont {
-  color: rgb(242, 242, 242);
-} */
 
 .rgbInputContainer {
   font-size: 80px;
@@ -40,8 +28,25 @@
   padding-bottom: 30px;
   border-radius: 15px;
   box-shadow: 0 10px 10px 0px rgba(0, 0, 0, 0.101);
+  transition-property: height;
+  transition-duration: 0.25s;
 }
 
 .slightShadow {
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.106);
+}
+
+.invisibleText {
+  color: transparent;
+  text-shadow: none;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  color: gray;
+  font-weight: 400;
+}
+
+.greenText {
+  color: green;
 }
