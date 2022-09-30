@@ -46,6 +46,15 @@ export default function Trainer() {
     setGameMode(gameModes.SHOW_RESULTS);
   }
 
+  function resetToNewGame() {
+    setActualColorHistory([]);
+    setRoundScores([]);
+    setPredictedColor([]);
+    setCumulativeScores([]);
+    setPredictedColorHistory([]);
+    resetToNextColor();
+  }
+
   function onKeyDown({ key }) {
     if (key === "Enter" && gameMode === gameModes.JUDGED) {
       if (roundScores.length === NUM_ROUNDS) {
@@ -53,6 +62,8 @@ export default function Trainer() {
       } else {
         resetToNextColor();
       }
+    } else if (key === "Enter" && gameMode === gameModes.SHOW_RESULTS) {
+      resetToNewGame();
     }
   }
 
