@@ -9,6 +9,7 @@ import {
 } from "../../util";
 import RgbInputFields from "../RgbInputFields/RgbInputFields";
 import Score from "../Score/Score";
+import ReviewScreen from "../ReviewScreen/ReviewScreen";
 
 export default function Trainer() {
   const [actualColor, setActualColor] = useState(generateRandomRgbValues());
@@ -19,8 +20,7 @@ export default function Trainer() {
   const [actualColorHistory, setActualColorHistory] = useState([]);
   const [predictedColorHistory, setPredictedColorHistory] = useState([]);
 
-  console.log(roundScores);
-  console.log(cumulativeScores);
+  const NUM_ROUNDS = 10;
 
   function acceptAnswer(predColor) {
     setPredictedColor(predColor);
@@ -42,9 +42,17 @@ export default function Trainer() {
     setGameMode(gameModes.WAITING_FOR_GUESS);
   }
 
+  function showResults() {
+    setGameMode(gameModes.SHOW_RESULTS);
+  }
+
   function onKeyDown({ key }) {
     if (key === "Enter" && gameMode === gameModes.JUDGED) {
-      resetToNextColor();
+      if (roundScores.length === NUM_ROUNDS) {
+        showResults();
+      } else {
+        resetToNextColor();
+      }
     }
   }
 
@@ -55,14 +63,27 @@ export default function Trainer() {
 
   return (
     <div
-      className={styles.colorScreen}
+      className={combineClassNames(
+        styles.colorScreen,
+        gameMode === gameModes.SHOW_RESULTS && styles.colorScreenUp
+      )}
       style={{ backgroundColor: formatRgbValues(...actualColor) }}
     >
-      <Score
-        cumulativeScores={cumulativeScores}
-        roundScore={roundScores.length === 0 ? 0 : roundScores.slice(-1)[0]}
-        gameMode={gameMode}
-      />
+      {gameMode === gameModes.SHOW_RESULTS ? (
+        <ReviewScreen
+          scores={roundScores}
+          predictedColors={predictedColorHistory}
+          actualColors={actualColorHistory}
+          totalScore={cumulativeScores.slice(-1)[0]}
+        />
+      ) : (
+        <Score
+          cumulativeScores={cumulativeScores}
+          roundScore={roundScores.length === 0 ? 0 : roundScores.slice(-1)[0]}
+          gameMode={gameMode}
+          numRounds={NUM_ROUNDS}
+        />
+      )}
       <div
         className={combineClassNames(
           styles.predictedColorScreen,
@@ -76,11 +97,13 @@ export default function Trainer() {
           gameMode === gameModes.JUDGED && styles.centerFloaterContainerUp
         )}
       >
-        <RgbInputFields
-          actualColor={actualColor}
-          sendAnswer={acceptAnswer}
-          gameMode={gameMode}
-        />
+        {gameMode !== gameModes.SHOW_RESULTS && (
+          <RgbInputFields
+            actualColor={actualColor}
+            sendAnswer={acceptAnswer}
+            gameMode={gameMode}
+          />
+        )}
       </div>
     </div>
   );

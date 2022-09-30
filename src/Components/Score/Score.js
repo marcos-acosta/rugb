@@ -17,7 +17,7 @@ export default function Score(props) {
           {({ countUpRef }) => (
             <div>
               <span className={styles.roundTracker}>
-                {cumulativeScores.length}/10{" "}
+                {cumulativeScores.length}/{props.numRounds}{" "}
               </span>
               <>&ensp;</>
               <span ref={countUpRef} />

@@ -1,27 +1,36 @@
 .colorScreen {
     width: 100%;
     height: 100%;
+    transition-property: background-color, height;
+    transition-duration: 0.25s;
+    position: relative;
+}
+
+.colorScreenUp {
+  height: 0%;
 }
 
 .centerFloaterContainer {
   position: absolute;
   min-width: 830px;
   left: calc((100% - 830px) / 2);
-  top: 350px;
+  top: 280px;
   transition-property: top;
   transition-duration: 0.25s;
 }
 
 .centerFloaterContainerUp {
-  top: 278px;
+  top: 208px;
 }
 
 .predictedColorScreen {
   position: absolute;
   width: 100%;
   height: 0px;
+  transition-property: height;
+  transition-duration: 0.25s;
 }
 
 .predictedColorScreenDown {
-  height: 360px;
+  height: 355px;
 }

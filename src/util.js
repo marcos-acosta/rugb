@@ -61,6 +61,7 @@ function score(actualColor, predictedColor) {
 const gameModes = {
   WAITING_FOR_GUESS: Symbol("waiting"),
   JUDGED: Symbol("judged"),
+  SHOW_RESULTS: Symbol("results"),
 };
 
 export {
