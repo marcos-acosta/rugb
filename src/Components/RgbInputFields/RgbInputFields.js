@@ -73,13 +73,14 @@ export default function RgbInputFields(props) {
       <button
         className={combineClassNames(
           styles.enterPrompt,
-          inputIsValid &&
-            props.gameMode === gameModes.WAITING_FOR_GUESS &&
-            styles.visible
+          inputIsValid && styles.visible,
+          props.gameMode === gameModes.JUDGED && styles.sitLower
         )}
-        onClick={() => {
-          submitAnswer();
-        }}
+        onClick={
+          props.gameMode === gameModes.JUDGED
+            ? props.enterBetweenRounds
+            : submitAnswer
+        }
       >
         ↩
       </button>

@@ -123,6 +123,7 @@ export default function Trainer(props) {
             actualColor={actualColor}
             sendAnswer={acceptAnswer}
             gameMode={gameMode}
+            enterBetweenRounds={() => onKeyDown({ key: "Enter" })}
           />
         )}
       </div>
