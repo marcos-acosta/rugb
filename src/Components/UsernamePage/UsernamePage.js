@@ -41,7 +41,7 @@ export default function UsernamePage(props) {
           className={styles.gameTitle}
           style={{ color: formatRgbValues(...randomColor) }}
         >
-          rbog
+          rugb
         </div>
         <input
           className={styles.usernameInput}
