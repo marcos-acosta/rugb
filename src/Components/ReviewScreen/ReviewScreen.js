@@ -21,6 +21,10 @@ export default function ReviewScreen(props) {
       <div className={styles.totalScore}>
         TOTAL
         <div className={styles.bigFont}>{props.totalScore}</div>
+        <div className={styles.restartTextTable}>
+          <div className={styles.enterSymbol}>↩</div>
+          <div className={styles.restOfTryAgainText}>to try again</div>
+        </div>
       </div>
     </div>
   );

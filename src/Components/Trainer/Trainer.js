@@ -102,6 +102,7 @@ export default function Trainer() {
         )}
         style={{ backgroundColor: formatRgbValues(...predictedColor) }}
       />
+
       <div
         className={combineClassNames(
           styles.centerFloaterContainer,

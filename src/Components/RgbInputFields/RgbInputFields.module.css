@@ -50,3 +50,29 @@
 .greenText {
   color: green;
 }
+
+.enterPrompt {
+  opacity: 0;
+  transition-duration: opacity, background-color;
+  transition-duration: 0.25s;
+  font-size: 30px;
+  background-color: white;
+  position: absolute;
+  width: 80px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 10px 10px 0px rgba(0, 0, 0, 0.101);
+  padding-top: 5px;
+  top: 190px;
+  left: calc((100% - 830px) / 2 + 830px - 80px);
+  cursor: pointer;
+  border: none;
+}
+
+.enterPrompt:hover {
+  background-color: rgb(246, 246, 246);
+}
+
+.visible {
+  opacity: 1;
+}

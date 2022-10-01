@@ -4,6 +4,7 @@ import styles from "./RgbInputFields.module.css";
 
 export default function RgbInputFields(props) {
   const [inputRgbValues, setInputRgbValues] = useState(["", "", ""]);
+  const [inputIsValid, setInputIsValid] = useState(false);
   const inputRefs = [useRef(), useRef(), useRef()];
   const firstRefCurrent = inputRefs[0] && inputRefs[0].current;
   const isJudged = props.gameMode === gameModes.JUDGED;
@@ -12,6 +13,16 @@ export default function RgbInputFields(props) {
     props.actualColor
       .map((actual, i) => actual === parseInt(inputRgbValues[i]))
       .reduce((partialAnd, b) => partialAnd && b, true);
+
+  useEffect(() => {
+    for (let i = 0; i < 3; i++) {
+      if (!inputValueIsValid(inputRgbValues[i])) {
+        setInputIsValid(false);
+        return;
+      }
+    }
+    setInputIsValid(true);
+  }, [inputRgbValues, setInputIsValid]);
 
   function submitAnswer() {
     for (let i = 0; i < 3; i++) {
@@ -59,6 +70,19 @@ export default function RgbInputFields(props) {
         styles.slightShadow
       )}
     >
+      <button
+        className={combineClassNames(
+          styles.enterPrompt,
+          inputIsValid &&
+            props.gameMode === gameModes.WAITING_FOR_GUESS &&
+            styles.visible
+        )}
+        onClick={() => {
+          submitAnswer();
+        }}
+      >
+        ↩
+      </button>
       {"rgb("}
       {[0, 1, 2].map((index) => (
         <span key={index}>

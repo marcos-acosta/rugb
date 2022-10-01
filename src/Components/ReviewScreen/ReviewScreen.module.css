@@ -23,8 +23,25 @@
 .totalScore {
   position: absolute;
   right: 100px;
-  top: 90px;
+  top: 190px;
   width: 30%;
   text-align: center;
   font-size: 25px;
+}
+
+.restartTextTable {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: auto auto;
+  gap: 12px;
+}
+
+.enterSymbol {
+  font-size: 30px;
+  padding-top: 5px;
+  text-align: right;
+}
+
+.restOfTryAgainText {
+  text-align: left;
 }
