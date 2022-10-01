@@ -11,7 +11,7 @@ import RgbInputFields from "../RgbInputFields/RgbInputFields";
 import Score from "../Score/Score";
 import ReviewScreen from "../ReviewScreen/ReviewScreen";
 
-export default function Trainer() {
+export default function Trainer(props) {
   const [actualColor, setActualColor] = useState(generateRandomRgbValues());
   const [predictedColor, setPredictedColor] = useState([]);
   const [gameMode, setGameMode] = useState(gameModes.WAITING_FOR_GUESS);
@@ -19,6 +19,8 @@ export default function Trainer() {
   const [cumulativeScores, setCumulativeScores] = useState([]);
   const [actualColorHistory, setActualColorHistory] = useState([]);
   const [predictedColorHistory, setPredictedColorHistory] = useState([]);
+  const [roundNumber, setRoundNumber] = useState(1);
+  const [submittedScoreId, setSubmittedScoreId] = useState(null);
 
   const NUM_ROUNDS = 10;
 
@@ -52,15 +54,19 @@ export default function Trainer() {
     setPredictedColor([]);
     setCumulativeScores([]);
     setPredictedColorHistory([]);
+    setRoundNumber(1);
     resetToNextColor();
   }
 
-  function onKeyDown({ key }) {
+  async function onKeyDown({ key }) {
     if (key === "Enter" && gameMode === gameModes.JUDGED) {
       if (roundScores.length === NUM_ROUNDS) {
+        const scoreId = await props.submitScore(cumulativeScores.slice(-1)[0]);
+        setSubmittedScoreId(scoreId);
         showResults();
       } else {
         resetToNextColor();
+        setRoundNumber(roundNumber + 1);
       }
     } else if (key === "Enter" && gameMode === gameModes.SHOW_RESULTS) {
       resetToNewGame();
@@ -86,11 +92,14 @@ export default function Trainer() {
           predictedColors={predictedColorHistory}
           actualColors={actualColorHistory}
           totalScore={cumulativeScores.slice(-1)[0]}
+          scoreboard={props.scoreboard}
+          submittedScoreId={submittedScoreId}
         />
       ) : (
         <Score
           cumulativeScores={cumulativeScores}
           roundScore={roundScores.length === 0 ? 0 : roundScores.slice(-1)[0]}
+          roundNumber={roundNumber}
           gameMode={gameMode}
           numRounds={NUM_ROUNDS}
         />

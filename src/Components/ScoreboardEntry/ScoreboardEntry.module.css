@@ -1,0 +1,18 @@
+.scoreboardEntry {
+  display: grid;
+  grid-template-columns: 60px 1fr 60px;
+  grid-template-rows: 1fr;
+  row-gap: 3px;
+  padding-right: 10px;
+  border-radius: 5px;
+}
+
+.scoreboardEntry.selectedEntry {
+  background-color: black;
+  color: white;
+}
+
+.score {
+  font-weight: 500;
+  text-align: right;
+}
