@@ -1,9 +1,13 @@
+import { getRankingsWithTies } from "../../util";
 import PredictionSummary from "../PredictionSummary.js/PredictionSummary";
 import ScoreboardEntry from "../ScoreboardEntry/ScoreboardEntry";
 import styles from "./ReviewScreen.module.css";
 
 export default function ReviewScreen(props) {
-  console.log(props.submittedScoreId);
+  const [leaderboardRankings, yourRanking] = getRankingsWithTies(
+    props.scoreboard.scores,
+    props.submittedScoreId
+  );
 
   return (
     <div className={styles.reviewScreenContainer}>
@@ -23,7 +27,10 @@ export default function ReviewScreen(props) {
       </div>
       <div className={styles.totalScore}>
         TOTAL
-        <div className={styles.bigFont}>{props.totalScore}</div>
+        <div className={styles.bigFont}>
+          {props.totalScore}
+          <span className={styles.yourRanking}>#{yourRanking}</span>
+        </div>
         <div className={styles.restartTextTable}>
           <div className={styles.enterSymbol}>↩</div>
           <div className={styles.restOfTryAgainText}>to try again</div>
@@ -35,15 +42,17 @@ export default function ReviewScreen(props) {
         ) : props.scoreboard.error ? (
           <div>error</div>
         ) : (
-          props.scoreboard.scores.map((scoreEntry, i) => (
-            <ScoreboardEntry
-              key={scoreEntry.id}
-              screenName={scoreEntry.data().screenName}
-              score={scoreEntry.data().score}
-              ranking={i + 1}
-              isYourScore={props.submittedScoreId === scoreEntry.id}
-            />
-          ))
+          props.scoreboard.scores
+            .slice(0, 10)
+            .map((scoreEntry, i) => (
+              <ScoreboardEntry
+                key={scoreEntry.id}
+                screenName={scoreEntry.data().screenName}
+                score={scoreEntry.data().score}
+                ranking={leaderboardRankings[i]}
+                isYourScore={props.submittedScoreId === scoreEntry.id}
+              />
+            ))
         )}
       </div>
     </div>

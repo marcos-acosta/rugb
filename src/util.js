@@ -58,6 +58,25 @@ function score(actualColor, predictedColor) {
   return Math.round(Math.max(100 - Math.pow(distance / 1.9, 1.6), 0));
 }
 
+function getRankingsWithTies(scores, yourId) {
+  let rankings = new Array(scores.length);
+  let yourRanking = null;
+  let ranking = 0;
+  for (let i = 0; i < scores.length; i++) {
+    if (i === 0 || scores[i].data().score < scores[i - 1].data().score) {
+      ranking++;
+    }
+    rankings[i] = ranking;
+    if (scores[i].id === yourId) {
+      yourRanking = ranking;
+    }
+    if (yourRanking && i >= 10) {
+      break;
+    }
+  }
+  return [rankings, yourRanking];
+}
+
 const gameModes = {
   WAITING_FOR_GUESS: Symbol("waiting"),
   JUDGED: Symbol("judged"),
@@ -71,5 +90,6 @@ export {
   combineClassNames,
   inputValueIsValid,
   score,
+  getRankingsWithTies,
   gameModes,
 };

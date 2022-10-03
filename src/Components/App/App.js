@@ -57,7 +57,7 @@ export default function App() {
           scoreboard={{
             error: error,
             loading: loading,
-            scores: value && value.docs.slice(0, 10),
+            scores: value && value.docs,
           }}
         />
       )}
