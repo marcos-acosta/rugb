@@ -1,0 +1,7 @@
+.gameTitle {
+  font-weight: 500;
+  font-size: 70px;
+  margin-bottom: 20px;
+  transition-duration: color;
+  transition-duration: 0.25s;
+}
