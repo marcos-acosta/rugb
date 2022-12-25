@@ -1,0 +1,11 @@
+.outerContainer {
+  margin-top: 100px;
+  text-align: center;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.textbox {
+  margin-top: 50px;
+  font-size: 16px;
+}

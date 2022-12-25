@@ -1,28 +1,16 @@
 import React, { useEffect, useState } from "react";
-import {
-  combineClassNames,
-  formatRgbValues,
-  generateRandomRgbValues,
-} from "../../util";
+import { combineClassNames } from "../../util";
+import TitleCard from "../TitleCard/TitleCard";
 import styles from "./UsernamePage.module.css";
 
 export default function UsernamePage(props) {
   const [currentUsername, setCurrentUsername] = useState("");
-  const [randomColor, setRandomColor] = useState([0, 0, 0]);
 
   function onKeyDown({ key }) {
     if (key === "Enter" && currentUsername) {
       props.setUsername(currentUsername);
     }
   }
-
-  useEffect(() => {
-    const colorInterval = setInterval(
-      () => setRandomColor(generateRandomRgbValues()),
-      2000
-    );
-    return () => clearInterval(colorInterval);
-  }, []);
 
   useEffect(() => {
     window.addEventListener("keydown", onKeyDown);
@@ -37,12 +25,7 @@ export default function UsernamePage(props) {
       )}
     >
       <div className={styles.usernameInputContainer}>
-        <div
-          className={styles.gameTitle}
-          style={{ color: formatRgbValues(...randomColor) }}
-        >
-          rugb
-        </div>
+        <TitleCard />
         <input
           className={styles.usernameInput}
           maxLength="10"
