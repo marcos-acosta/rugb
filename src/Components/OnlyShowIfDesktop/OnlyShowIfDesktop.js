@@ -1,9 +1,13 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 import TitleCard from "../TitleCard/TitleCard";
-import styles from "./NoMobileScreen.module.css";
+import styles from "./OnlyShowIfDesktop.module.css";
 
-export default function NoMobileScreen() {
-  return (
+export default function OnlyShowIfDesktop(props) {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 1000px)",
+  });
+  return isMobile ? (
     <div className={styles.outerContainer}>
       <TitleCard />
       <div className={styles.textbox}>
@@ -14,5 +18,7 @@ export default function NoMobileScreen() {
         <p>¯\_(ツ)_/¯</p>
       </div>
     </div>
+  ) : (
+    props.children
   );
 }
