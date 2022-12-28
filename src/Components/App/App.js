@@ -12,8 +12,6 @@ import {
 } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { generateUniqueID } from "web-vitals/dist/modules/lib/generateUniqueID";
-import { useMediaQuery } from "react-responsive";
-import NoMobileScreen from "../NoMobileScreen/NoMobileScreen";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -31,9 +29,6 @@ export default function App() {
   const [value, loading, error] = useCollection(
     query(collection(db, "scores"), orderBy("score", "desc"))
   );
-  const isMobile = useMediaQuery({
-    query: "(max-width: 1000px)",
-  });
   const [username, setUsername] = useState("");
   const [usernamePageShouldDisappear, setUsernamePageShouldDisappear] =
     useState(false);
@@ -54,9 +49,7 @@ export default function App() {
     return id;
   }
 
-  return isMobile ? (
-    <NoMobileScreen />
-  ) : (
+  return (
     <>
       {username && (
         <Trainer
@@ -72,7 +65,6 @@ export default function App() {
         <UsernamePage
           setUsername={triggerSetUsername}
           disappear={usernamePageShouldDisappear}
-          isMobile={isMobile}
         />
       )}
     </>

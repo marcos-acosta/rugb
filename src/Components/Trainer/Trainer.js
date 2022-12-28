@@ -10,6 +10,7 @@ import {
 import RgbInputFields from "../RgbInputFields/RgbInputFields";
 import Score from "../Score/Score";
 import ReviewScreen from "../ReviewScreen/ReviewScreen";
+import OnlyShowIfDesktop from "../OnlyShowIfDesktop/OnlyShowIfDesktop";
 
 export default function Trainer(props) {
   const [actualColor, setActualColor] = useState(generateRandomRgbValues());
@@ -79,54 +80,56 @@ export default function Trainer(props) {
   });
 
   return (
-    <div
-      className={combineClassNames(
-        styles.colorScreen,
-        gameMode === gameModes.SHOW_RESULTS && styles.colorScreenUp
-      )}
-      style={{ backgroundColor: formatRgbValues(...actualColor) }}
-    >
-      {gameMode === gameModes.SHOW_RESULTS ? (
-        <ReviewScreen
-          scores={roundScores}
-          predictedColors={predictedColorHistory}
-          actualColors={actualColorHistory}
-          totalScore={cumulativeScores.slice(-1)[0]}
-          scoreboard={props.scoreboard}
-          submittedScoreId={submittedScoreId}
-        />
-      ) : (
-        <Score
-          cumulativeScores={cumulativeScores}
-          roundScore={roundScores.length === 0 ? 0 : roundScores.slice(-1)[0]}
-          roundNumber={roundNumber}
-          gameMode={gameMode}
-          numRounds={NUM_ROUNDS}
-        />
-      )}
+    <OnlyShowIfDesktop>
       <div
         className={combineClassNames(
-          styles.predictedColorScreen,
-          gameMode === gameModes.JUDGED && styles.predictedColorScreenDown
+          styles.colorScreen,
+          gameMode === gameModes.SHOW_RESULTS && styles.colorScreenUp
         )}
-        style={{ backgroundColor: formatRgbValues(...predictedColor) }}
-      />
-
-      <div
-        className={combineClassNames(
-          styles.centerFloaterContainer,
-          gameMode === gameModes.JUDGED && styles.centerFloaterContainerUp
-        )}
+        style={{ backgroundColor: formatRgbValues(...actualColor) }}
       >
-        {gameMode !== gameModes.SHOW_RESULTS && (
-          <RgbInputFields
-            actualColor={actualColor}
-            sendAnswer={acceptAnswer}
+        {gameMode === gameModes.SHOW_RESULTS ? (
+          <ReviewScreen
+            scores={roundScores}
+            predictedColors={predictedColorHistory}
+            actualColors={actualColorHistory}
+            totalScore={cumulativeScores.slice(-1)[0]}
+            scoreboard={props.scoreboard}
+            submittedScoreId={submittedScoreId}
+          />
+        ) : (
+          <Score
+            cumulativeScores={cumulativeScores}
+            roundScore={roundScores.length === 0 ? 0 : roundScores.slice(-1)[0]}
+            roundNumber={roundNumber}
             gameMode={gameMode}
-            enterBetweenRounds={() => onKeyDown({ key: "Enter" })}
+            numRounds={NUM_ROUNDS}
           />
         )}
+        <div
+          className={combineClassNames(
+            styles.predictedColorScreen,
+            gameMode === gameModes.JUDGED && styles.predictedColorScreenDown
+          )}
+          style={{ backgroundColor: formatRgbValues(...predictedColor) }}
+        />
+
+        <div
+          className={combineClassNames(
+            styles.centerFloaterContainer,
+            gameMode === gameModes.JUDGED && styles.centerFloaterContainerUp
+          )}
+        >
+          {gameMode !== gameModes.SHOW_RESULTS && (
+            <RgbInputFields
+              actualColor={actualColor}
+              sendAnswer={acceptAnswer}
+              gameMode={gameMode}
+              enterBetweenRounds={() => onKeyDown({ key: "Enter" })}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </OnlyShowIfDesktop>
   );
 }
